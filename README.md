@@ -19,11 +19,6 @@ The second step is to place the pictures and text you need to generate under / d
 
 The third step is to generate your tfrecord by
 ```
-python generate_tfrecord_JPG.py
+python generate_tfrecord_train.py
 
-```
-or
-
-```
-python generate_tfrecord_PNG.py
 ```
