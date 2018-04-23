@@ -30,17 +30,27 @@ with open('dic.txt', encoding="utf") as dict_file:
         (key, value) = line.strip().split('\t')
         dict[value] = int(key)
 print((dict))
+dir='/data/images/generator_cn_ocr_data'
+filename = os.path.join(dir, 'train_cn_data.txt')
+addrs_image=[]
+labels=[]
+with open(filename, 'r', encoding="utf-8") as f:
+    for line in f:
+        image = line.split('\t')[0]
+        label = line.split('\t')[1].replace('\n','')
+        addrs_image.append(image)
+        labels.append(label)
 
-image_path = 'data/*/*.jpg'
-addrs_image = glob.glob(image_path)
+#image_path = 'data/*/*.jpg'
+#addrs_image = glob.glob(image_path)
 
-label_path = 'data/*/*.txt'
-addrs_label = glob.glob(label_path)
+#label_path = 'data/*/*.txt'
+#addrs_label = glob.glob(label_path)
 
 print(len(addrs_image))
-print(len(addrs_label))
+print(len(labels))
 
-tfrecord_writer  = tf.python_io.TFRecordWriter("tfexample_train") 
+tfrecord_writer  = tf.python_io.TFRecordWriter("tfexample_train")
 for j in range(0,int(len(addrs_image))):
     
 
@@ -48,17 +58,13 @@ for j in range(0,int(len(addrs_image))):
     print('Train data: {}/{}'.format(j,int(len(addrs_image))))
     sys.stdout.flush()
 
-    img = Image.open(addrs_image[j])
+    img = Image.open(os.path.join(dir, 'train',addrs_image[j]))
 
     img = img.resize((600, 150), Image.ANTIALIAS)
     np_data = np.array(img)
     image_data = img.tobytes()
-    for text in open(addrs_label[j], encoding="utf"):
-                 char_ids_padded, char_ids_unpadded = encode_utf8_string(
-                            text=text,
-                            dic=dict,
-                            length=37,
-                            null_char_id=5462)
+    for text in labels[j]:
+        char_ids_padded, char_ids_unpadded = encode_utf8_string( text=text, dic=dict, length=37, null_char_id=5462)
 
 
 
