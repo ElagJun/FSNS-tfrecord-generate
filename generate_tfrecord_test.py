@@ -64,8 +64,7 @@ for j in range(0, int(len(addrs_image))):
     img = img.resize((600, 150), Image.ANTIALIAS)
     np_data = np.array(img)
     image_data = img.tobytes()
-    for text in labels[j]:
-        char_ids_padded, char_ids_unpadded = encode_utf8_string(text=text, dic=dict, length=37, null_char_id=5462)
+    char_ids_padded, char_ids_unpadded = encode_utf8_string(text=labels[j], dic=dict, length=37, null_char_id=5462)
 
     example = tf.train.Example(features=tf.train.Features(
         feature={
