@@ -75,7 +75,7 @@ for j in range(0, int(len(addrs_image))):
             'image/orig_width': _int64_feature([np_data.shape[1]]),
             'image/class': _int64_feature(char_ids_padded),
             'image/unpadded_class': _int64_feature(char_ids_unpadded),
-            'image/text': _bytes_feature(bytes(text, 'utf-8')),
+            'image/text': _bytes_feature(bytes(labels[j], 'utf-8')),
             # 'height': _int64_feature([crop_data.shape[0]]),
         }
     ))
